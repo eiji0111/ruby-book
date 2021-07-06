@@ -1,8 +1,3 @@
-name = 'Alice'
+require 'date'
 
-a = <<TEXT
-  この中では#{name}
-  のように式展開が使えます！
-TEXT
-
-puts a
+puts Date.today
