@@ -1,4 +1,30 @@
+module SelfAid
+
+  HP = [200]
+
+  def selfaid
+    @hp += 100
+    p "#{@name}はHPを100回復した！"
+  end
+
+  def run
+    p "逃げた"
+  end
+
+  module_function :run
+  class << self
+    def sleep
+      p "お昼寝"
+    end
+
+    def hello
+      p "Hello"
+    end
+  end
+end
+
 class Hero
+  include SelfAid
   attr_accessor :name, :hp
 
   def initialize(name, hp)
@@ -8,18 +34,20 @@ class Hero
 
   # デフォルトがpublic
   
-  def bad
-    sulip
+  def bad(hp)
+    slip
     p "さらに#{name}は毒になった"
+    new_hp = hp -= 20
+    p "#{name}はHPが#{new_hp}になった"
   end
 
-  private 
   # privateはレシーバを指定できない！！
   # 子クラス（サブクラス）でも呼び出し可能
-  def sulip
+  def slip
     new_hp = hp - 5
     p "#{name}は転んで5のダメージを受けた"
     p "#{name}はHPが#{new_hp}になった"
+    run
   end
 end
 
@@ -36,10 +64,20 @@ class LittleHero < Hero
     @mp += 5
   end
 
-  
   def self.magic # クラスメソッド（クラス名.メソッド）
     p "Fire"
   end
+
+  def selfaid
+    @hp += 200
+    p "#{@name}はHPを200回復した！"
+  end
 end
 
-hero1 = LittleHero.new('eiji', 50, 10)
+hero1 = Hero.new('eiji', 50)
+
+hero1.slip
+
+SelfAid.run
+
+p SelfAid::HP
