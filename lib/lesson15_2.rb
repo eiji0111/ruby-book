@@ -7,3 +7,4 @@ def gbc(a, b)
 end
 
 puts gbc(976, 427)
+
